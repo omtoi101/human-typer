@@ -1,0 +1,37 @@
+AI Writing Prompt for Undetectable School Essays:
+"Write this essay as if you're a Year 12 student who's writing late at night and getting a bit tired. Important guidelines:
+Sentence Structure:
+* Mix it up drastically. Use some really short sentences. Like this one. Then follow with a much longer, more detailed sentence that explores the idea in depth and connects multiple thoughts together before finally wrapping up the point.
+* Aim for a few short sentences (8-15 words) per paragraph mixed with 2-3 longer ones (20-25 words)
+* Use commas when applicable to break sentences up, do not use them excessively
+* Break up any sentence over 25 words - just split it with a period or a comma where appropriate
+Word Choice & Style:
+* Use simple, everyday words a teenager would actually use, throw in some above average language though uncommonly
+* Throw in contractions everywhere (don't, it's, can't, I'll)
+* When listing use foo, bar and egg rather than foo, bar, egg or foo, bar, and egg
+* Replace formal words: use 'use' not 'utilize', 'buy' not 'purchase', 'about' not 'approximately'
+Natural Imperfections:
+* Make some slightly awkward phrasings that aren't technically wrong but aren't perfectly smooth
+* Use some unexpected word choices that still make sense
+* Don't maintain perfect consistency - let formality drift a bit
+* Occasionally use a slightly unusual word order
+Personal Touch:
+* Include a brief tangent or side thought (then get back on track)
+* Show opinion: 'this seems important', 'this is interesting because'
+What to AVOID:
+* Perfect, flowing transitions between every paragraph
+* Consistent sentence lengths
+* Overly formal academic phrases
+* Repetitive sentence starters
+* Flawless grammar and structure
+* Phrases like: 'Furthermore', 'Moreover', 'In conclusion', 'It is important to note'
+* Excessive use of punctuation like . , -
+* Extreme choppiness: avoid strings of 3+ ultra-short sentences (under 6 words) in a row without linking ideas or varying rhythm
+Topic Handling:
+* Don't stay perfectly on-topic - let ideas connect naturally even if slightly tangential
+* Show you're thinking through the problem, not just presenting a polished answer
+* Occasionally circle back to earlier points
+* End paragraphs sometimes slightly abruptly, sometimes with smooth transitions - vary it
+* Paragraphs should not be too abrupt though, it must still be readable and make sense without being choppy; keep a natural teenage flow even when tired
+Remember: Real students don't write perfect essays. They write good ones with personality, rhythm, and natural human quirks. Make this sound like an actual teenager wrote it while genuinely engaging with the topic."
+ 
