@@ -243,7 +243,13 @@ class TypingApp:
         self.text_input = scrolledtext.ScrolledText(main_frame, width=80, height=12,
                                                      wrap=tk.WORD, font=('Arial', 10))
         self.text_input.grid(row=2, column=0, columnspan=2, pady=(0, 10))
-        self.text_input.insert('1.0', "Type your text here. Press the hotkey to start typing!")
+        try:
+            with open("prompt.txt", "r", encoding="utf-8") as f:
+                self.text_input.insert('1.0', f.read())
+        except FileNotFoundError:
+            self.text_input.insert('1.0', "prompt.txt not found. Please create the file.")
+        except Exception as e:
+            self.text_input.insert('1.0', f"An error occurred while reading prompt.txt: {e}")
         
         # Status frame
         status_frame = ttk.LabelFrame(main_frame, text="Status", padding="10")
@@ -283,22 +289,32 @@ class TypingApp:
                                      command=self.open_settings, width=12)
         settings_button.grid(row=0, column=3, padx=5)
         
-        # Second row - Stay on top button
+        # Second row of buttons
         self.topmost_button = ttk.Button(button_frame, text="Stay On Top: OFF", 
                                          command=self.toggle_stay_on_top, width=15)
-        self.topmost_button.grid(row=1, column=0, columnspan=2, padx=5, pady=(5, 0))
+        self.topmost_button.grid(row=1, column=0, columnspan=1, padx=5, pady=(5, 0))
+
+        self.copy_button = ttk.Button(button_frame, text="Copy Prompt",
+                                      command=self.copy_to_clipboard, width=15)
+        self.copy_button.grid(row=1, column=1, columnspan=2, padx=5, pady=(5, 0))
         
         # Direct input toggle (faster typing)
         self.direct_input_button = ttk.Button(button_frame, text="Direct Input: OFF", 
                                               command=self.toggle_direct_input, width=15)
-        self.direct_input_button.grid(row=1, column=2, columnspan=2, padx=5, pady=(5, 0))
+        self.direct_input_button.grid(row=1, column=3, columnspan=1, padx=5, pady=(5, 0))
         
         # Info label
         info_text = f"Press {self.settings['hotkey'].upper()} to start/pause typing (3 second countdown to switch windows)"
         self.info_label = ttk.Label(main_frame, text=info_text, 
                                     font=('Arial', 9), foreground='blue')
         self.info_label.grid(row=5, column=0, columnspan=2)
-    
+
+    def copy_to_clipboard(self):
+        """Copy the text from the text input to the clipboard"""
+        self.root.clipboard_clear()
+        self.root.clipboard_append(self.text_input.get('1.0', tk.END))
+        self.progress_label.config(text="Prompt copied to clipboard!", foreground='green')
+
     def toggle_stay_on_top(self):
         """Toggle the stay on top feature"""
         self.stay_on_top = not self.stay_on_top
