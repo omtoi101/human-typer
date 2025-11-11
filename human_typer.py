@@ -243,13 +243,7 @@ class TypingApp:
         self.text_input = scrolledtext.ScrolledText(main_frame, width=80, height=12,
                                                      wrap=tk.WORD, font=('Arial', 10))
         self.text_input.grid(row=2, column=0, columnspan=2, pady=(0, 10))
-        try:
-            with open("prompt.txt", "r", encoding="utf-8") as f:
-                self.text_input.insert('1.0', f.read())
-        except FileNotFoundError:
-            self.text_input.insert('1.0', "prompt.txt not found. Please create the file.")
-        except Exception as e:
-            self.text_input.insert('1.0', f"An error occurred while reading prompt.txt: {e}")
+        self.text_input.insert('1.0', "Type your text here. Press the hotkey to start typing!")
         
         # Status frame
         status_frame = ttk.LabelFrame(main_frame, text="Status", padding="10")
@@ -310,10 +304,17 @@ class TypingApp:
         self.info_label.grid(row=5, column=0, columnspan=2)
 
     def copy_to_clipboard(self):
-        """Copy the text from the text input to the clipboard"""
-        self.root.clipboard_clear()
-        self.root.clipboard_append(self.text_input.get('1.0', tk.END))
-        self.progress_label.config(text="Prompt copied to clipboard!", foreground='green')
+        """Copy the text from prompt.txt to the clipboard"""
+        try:
+            with open("prompt.txt", "r", encoding="utf-8") as f:
+                prompt_text = f.read()
+                self.root.clipboard_clear()
+                self.root.clipboard_append(prompt_text)
+                self.progress_label.config(text="Prompt copied to clipboard!", foreground='green')
+        except FileNotFoundError:
+            self.progress_label.config(text="Error: prompt.txt not found!", foreground='red')
+        except Exception as e:
+            self.progress_label.config(text=f"Error: {e}", foreground='red')
 
     def toggle_stay_on_top(self):
         """Toggle the stay on top feature"""
