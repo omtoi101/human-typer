@@ -20,6 +20,15 @@ pyautogui.MINIMUM_SLEEP = 0
 
 
 class HumanTyper:
+    """
+    Handles the logic for human-like typing simulation.
+
+    Attributes:
+        text (str): The text to be typed.
+        wpm (int): Target typing speed in Words Per Minute.
+        typo_rate (float): Probability of making a typo (0.0 to 1.0).
+        use_direct_input (bool): If True, uses the 'keyboard' library for typing.
+    """
     def __init__(self, text, wpm=50, typo_rate=0.05, use_direct_input=False):
         self.text = text
         self.wpm = wpm
@@ -28,14 +37,18 @@ class HumanTyper:
         self.is_paused = False
         self.use_direct_input = use_direct_input
         
+        # Calculate base delay between characters based on WPM
+        # Standard WPM assumes 5 characters per word
         chars_per_minute = wpm * 5
         self.base_delay = 60 / chars_per_minute
         
     def get_random_delay(self):
+        """Calculate a randomized delay to simulate human variance."""
         variation = random.uniform(0.6, 1.4)
         return self.base_delay * variation
     
     def add_thinking_pause(self):
+        """Introduce occasional pauses to mimic human 'thinking' or reading."""
         # Scale thinking pauses with WPM - faster typing = shorter pauses
         # Most pauses are short (0.05-0.2s), occasionally longer (up to 0.5s)
         if random.random() < 0.15:  # 15% chance of pause
@@ -89,6 +102,7 @@ class HumanTyper:
             pyautogui.press(key)
     
     def type_with_corrections(self, char):
+        """Type a character with a chance of making and correcting a typo."""
         if self.should_stop:
             return False
             
@@ -100,13 +114,13 @@ class HumanTyper:
             if self.should_stop:
                 return False
             
-            # Scale "realization" delay with WPM
+            # Scale "realization" delay with WPM - time taken to notice the error
             realization_delay = random.uniform(0.05, 0.15) * (50 / self.wpm)
             self.wait_with_pause_check(realization_delay)
             if self.should_stop:
                 return False
             
-            # Backspace
+            # Backspace to fix the error
             self.type_key('backspace')
             self.wait_with_pause_check(self.get_random_delay())
             if self.should_stop:
@@ -173,13 +187,16 @@ class HumanTyper:
 
 
 class TypingApp:
+    """
+    Main Tkinter application for the Human-like Typer GUI.
+    """
     def __init__(self, root):
         self.root = root
         self.root.title("Human-like Typer")
         self.root.geometry("700x640")
         self.root.resizable(False, False)
         
-        # Settings
+        # Settings persistence
         self.settings_file = "typer_settings.json"
         self.load_settings()
         
