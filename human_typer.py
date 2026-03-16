@@ -12,6 +12,13 @@ from tkinter import ttk, scrolledtext, messagebox
 import threading
 import json
 import os
+import sys
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 # CRITICAL: Disable PyAutoGUI's built-in delays
 pyautogui.PAUSE = 0
@@ -197,7 +204,14 @@ class TypingApp:
         self.root.resizable(False, False)
         
         # Settings persistence
-        self.settings_file = "typer_settings.json"
+        # We want settings to be in the same directory as the executable, not bundled inside
+        if getattr(sys, 'frozen', False):
+            # If running as bundled exe
+            application_path = os.path.dirname(sys.executable)
+        else:
+            application_path = os.path.dirname(os.path.abspath(__file__))
+
+        self.settings_file = os.path.join(application_path, "typer_settings.json")
         self.load_settings()
         
         # State
@@ -260,7 +274,18 @@ class TypingApp:
         self.text_input = scrolledtext.ScrolledText(main_frame, width=80, height=12,
                                                      wrap=tk.WORD, font=('Arial', 10))
         self.text_input.grid(row=2, column=0, columnspan=2, pady=(0, 10))
-        self.text_input.insert('1.0', "Type your text here. Press the hotkey to start typing!")
+
+        # Load initial text from prompt.txt if it exists
+        initial_text = "Type your text here. Press the hotkey to start typing!"
+        prompt_path = resource_path("prompt.txt")
+        if os.path.exists(prompt_path):
+            try:
+                with open(prompt_path, 'r', encoding='utf-8') as f:
+                    initial_text = f.read()
+            except Exception:
+                pass
+
+        self.text_input.insert('1.0', initial_text)
         
         # Status frame
         status_frame = ttk.LabelFrame(main_frame, text="Status", padding="10")
