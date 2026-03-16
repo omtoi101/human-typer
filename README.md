@@ -42,6 +42,24 @@ A Python-based desktop application that simulates human typing with realistic va
    python human_typer.py
    ```
 
+## Building an Executable
+
+You can package the application into a standalone executable using PyInstaller:
+
+1. Install PyInstaller:
+   ```bash
+   pip install pyinstaller
+   ```
+
+2. Build the executable:
+   ```bash
+   pyinstaller human_typer.spec
+   ```
+
+The resulting executable will be in the `dist/` directory.
+
+## Usage
+
 2. **Prepare your text**: Enter or paste the text you want to type into the main text area.
 3. **Configure Settings**: Click the "Settings" button to adjust WPM, typo rate, or change the start/pause hotkey.
 4. **Enable the Typer**: Click the "Enable" button. This activates the hotkey.
